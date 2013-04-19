@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'pp'
+
+command = "grep -R '#{ARGV[0]}' #{ENV['WOMPT_LOG_DIR']}"
+#puts command
+`#{command}`.split("\n").each do |line|
+   _,_,message = line.split ':', 3
+   message = JSON.parse(message)
+   puts "#{message['from']['name']}: #{message['msg']}"
+end
+
