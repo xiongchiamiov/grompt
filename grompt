@@ -8,6 +8,12 @@
 require 'json'
 require 'pp'
 
+# Show prettier output on interrupt (ctrl+c)
+trap("INT") do |s|
+   puts
+   exit(s)
+end
+
 command = "grep -R '#{ARGV[0]}' #{ENV['WOMPT_LOG_DIR']}"
 #puts command
 `#{command}`.split("\n").each do |line|
