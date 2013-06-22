@@ -14,10 +14,10 @@ trap("INT") do |s|
    exit(s)
 end
 
-command = "grep -R '#{ARGV[0]}' #{ENV['WOMPT_LOG_DIR']}"
-#puts command
+command = "grep --no-filename -R '#{ARGV[0]}' #{ENV['WOMPT_LOG_DIR']}"
 `#{command}`.split("\n").each do |line|
-   _,_,message = line.split ':', 3
+   # Format is: <messageid>:<json object>
+   _,message = line.split ':', 2
    message = JSON.parse(message)
    puts "#{message['from']['name']}: #{message['msg']}"
 end
