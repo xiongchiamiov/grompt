@@ -19,6 +19,12 @@ command = "grep --no-filename -R '#{ARGV[0]}' #{ENV['WOMPT_LOG_DIR']}"
    # Format is: <messageid>:<json object>
    _,message = line.split ':', 2
    message = JSON.parse(message)
+
+   # Skip joins and parts.
+   if message['action'] != 'message'
+      next
+   end
+   
    puts "#{message['from']['name']}: #{message['msg']}"
 end
 
